@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+using namespace std;
+map<string, vector<double>> prices = {
+    {"TOI", {3, 3, 3, 3, 3, 5, 6}},
+    {"Hindu", {2.5, 2.5, 2.5, 2.5, 2.5, 4, 4}},
+    {"ET", {4, 4, 4, 4, 4, 4, 10}},
+    {"BM", {1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5}},
+    {"HT", {2, 2, 2, 2, 2, 4, 4}}
+};
+void findCombinations(vector<string>& curr, double budget) {
+    if (budget < 0) {
+        return;
+    }
+    if (budget == 0) {
+        for (string s : curr) {
+            cout << s << " ";
+        }
+        cout << endl;
+        return;
+    }
+    for (auto it = prices.begin(); it != prices.end(); ++it) {
+        curr.push_back(it->first);
+        findCombinations(curr, budget - it->second[curr.size() - 1]);
+        curr.pop_back();
+    }
+}
+
+int main() {
+    double budget;
+    cout << "Enter weekly budget: ";
+    cin >> budget;
+    vector<string> curr;
+    findCombinations(curr, budget);
+    return 0;
+}
