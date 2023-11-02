@@ -1,0 +1,24 @@
+name: Java CI with Gradle
+
+on: 
+  push: 
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: action/checkout@v2
+
+        - name: Set up JDK 11
+          uses: action/setup-java@v2
+          with:
+             distribution: 'adopt'
+             java-version: '11'
+
+        - name: Build with Gradle
+          run: web/ .github/workflows/main.yml ./gradlew build
+        - name: Run Java Main
+          run: javac Main.java && java Main
